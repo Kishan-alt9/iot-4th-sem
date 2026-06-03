@@ -13,8 +13,8 @@ WebServer server(80);
 
 void handleRoot()
 {
-    int mq2 = 1200;
-    int mq135 = 1800;
+    int mq2 = analogRead(MQ2_PIN);
+    int mq135 = analogRead(MQ135_PIN);
 
     String status = getStatus(mq2, mq135);
 
@@ -30,12 +30,20 @@ void handleRoot()
 void setup()
 {
     Serial.begin(115200);
+    delay(2000);
+
+    Serial.println("ESP32 Started");
 
     server.on("/", handleRoot);
-
-    Serial.println("Server configured");
 }
 
 void loop()
 {
+     Serial.print("MQ2: ");
+    Serial.print(analogRead(MQ2_PIN));
+
+    Serial.print(" | MQ135: ");
+    Serial.println(analogRead(MQ135_PIN));
+
+    delay(1000);
 }
